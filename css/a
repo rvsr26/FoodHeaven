@@ -12,3 +12,4 @@ body {
     font-family: sans-serif;
     background: var(--bg-main);
 }
+html { scroll-behavior: smooth; }
