@@ -1,0 +1,14 @@
+/* FOOD HEAVEN – ROOT STYLE BASE */
+:root {
+    --primary: #e92c40;
+    --primary-dark: #cc2535;
+    --accent: #41b883;
+    --dark: #121826;
+    --bg-main: #fff7f0;
+    --text-high: #222222;
+}
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: var(--bg-main);
+}
