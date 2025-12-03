@@ -17,3 +17,4 @@ export const db = getFirestore(app);
 // NOTE: The 'firebaseConfig' variable is no longer exported or hardcoded here.
 // Only the initialized 'auth' and 'db' objects are exported.
 // Safe Init Config Verify
+// Optimized modules loading
