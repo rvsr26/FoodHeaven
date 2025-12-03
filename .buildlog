@@ -7,3 +7,4 @@
 [2025-12-02] refactor: extracted css utility variables
 [2025-12-03] docs: secure configuration parameters guide updated
 [2025-12-03] test: checked firebase initialized connection status
+[2025-12-03] refactor: removed excess firebase variables
