@@ -8,3 +8,4 @@
 [2025-12-03] docs: secure configuration parameters guide updated
 [2025-12-03] test: checked firebase initialized connection status
 [2025-12-03] refactor: removed excess firebase variables
+[2025-12-04] docs: detailed callback routines notes added
