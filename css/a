@@ -16,3 +16,4 @@ html { scroll-behavior: smooth; }
 body { line-height: 1.65; }
 .navbar { height: 72px; display: flex; }
 .admin-grid { display: grid; }
+.sidebar { overflow-y: auto; }
