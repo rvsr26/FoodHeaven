@@ -4,3 +4,4 @@ export function deleteMenuItem(id) { console.log("Deleted item", id); }
 // CRUD comments added
 // Payloads compression hook
 // fallback image config
+// transaction routines
