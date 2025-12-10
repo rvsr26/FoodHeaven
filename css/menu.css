@@ -1,0 +1,910 @@
+/* ========================================================================== */
+/* FOOD HEAVEN – ADVANCED FULL CSS (PRODUCTION READY V2.3 - FINAL FIXED MERGE)*/
+/* ========================================================================== */
+
+/* ================= ROOT VARIABLES (FINALIZED) ================= */
+:root {
+    /* Brand */
+    --primary: #e92c40;
+    --primary-dark: #cc2535;
+    --accent: #41b883;
+
+    /* Neutrals */
+    --dark: #121826;
+    --bg-main: #fff7f0;
+    --bg-card: #ffffff;
+    --bg-secondary: #fbf9f7;
+    --text-high: #222222;
+    --text-main: #444444;
+    --text-low: #7d8a9a;
+    --border-soft: rgba(0, 0, 0, 0.08);
+    --overlay-bg: rgba(0, 0, 0, 0.4);
+    
+    /* Layout */
+    --max-width: 1200px;
+    --nav-height: 72px;
+    --sidebar-width: 380px;
+
+    /* Aesthetics */
+    --radius-lg: 18px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.1);
+    --shadow-strong: 0 25px 60px rgba(15, 23, 42, 0.2);
+    --ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --font: "Poppins", system-ui, sans-serif;
+    
+    /* Dynamic / Advanced */
+    --bg-skeleton: #e9e9e9;
+    --skeleton-shimmer-color: rgba(255, 255, 255, 0.65);
+    --sticky-topbar-offset: calc(var(--nav-height) + 12px);
+    /* Calculated offset: nav-height + margin + topbar-height + margin */
+    --category-header-offset: calc(var(--sticky-topbar-offset) + 76px + 16px);
+}
+
+/* ================= DARK MODE ================= */
+body.dark-mode {
+    --primary: #ff4d5e;
+    --primary-dark: #e93b4b;
+
+    --bg-main: #141c2d;
+    --bg-card: #1f2a3e;
+    --bg-secondary: #1a2333;
+    --text-high: #ffffff;
+    --text-main: #e2e8f0;
+    --text-low: #a0aec0;
+    --border-soft: rgba(255, 255, 255, 0.12);
+
+    --bg-skeleton: #2a3a54;
+    --skeleton-shimmer-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Dark Mode Overrides for Translucent Elements */
+body.dark-mode .navbar { 
+    background: rgba(20, 28, 45, 0.95);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+body.dark-mode .sidebar-footer {
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ================= GLOBAL RESET & LAYOUT ================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+body { 
+    font-family: var(--font); 
+    background: var(--bg-main); 
+    color: var(--text-high); 
+    line-height: 1.65; 
+    transition: background 0.3s, color 0.3s; 
+}
+img { display: block; max-width: 100%; height: auto; }
+a { text-decoration: none; color: inherit; }
+button { background: none; border: none; cursor: pointer; font-family: inherit; }
+.container { max-width: var(--max-width); margin-inline: auto; padding-inline: 1.5rem; padding-block: 4rem; }
+.empty-msg { text-align: center; color: var(--text-low); padding: 2rem 1.5rem; font-style: italic; }
+
+/* ================= GLOBAL HEADERS & BUTTONS ================= */
+
+/* Redefined Section Header (Used in Topbar/General Sections) */
+.section-header { 
+    font-size: clamp(1.9rem, 3vw, 2.3rem); 
+    font-weight: 900; 
+    letter-spacing: 0.4px; 
+    line-height: 1.1;
+    display: flex; 
+    align-items: center; 
+    gap: 0.8rem;
+    padding-left: 1rem; 
+    border-left: 6px solid var(--primary); 
+    color: var(--text-high);
+    margin-bottom: 3.5rem; /* Default margin for non-topbar usage */
+}
+/* Section Header Accent Dot */
+.section-header::after {
+    content: none;
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0.7;
+    margin-left: 0.8rem;
+}
+/* Button Base */
+.btn { 
+    padding: 1rem 2.5rem; border-radius: 99px; font-weight: 700; 
+    transition: 0.3s var(--ease); display: inline-flex; align-items: center; 
+    text-transform: uppercase; letter-spacing: 0.5px; 
+}
+.btn-primary { background: var(--primary); color: #fff; box-shadow: 0 10px 25px rgba(233, 44, 64, 0.4); }
+.btn-primary:hover { transform: translateY(-4px); background: var(--primary-dark); }
+.btn-secondary { border: 2px solid var(--text-high); color: var(--text-high); padding: calc(1rem - 2px) calc(2.5rem - 2px); }
+.btn-secondary:hover { background: var(--text-high); color: var(--bg-card); transform: translateY(-4px); }
+
+/* --- Small button style for forms --- */
+.btn-small {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85rem;
+    text-transform: none;
+}
+
+/* ========================================================================== */
+/* 🧭 NAVBAR (Glassmorphism, Sticky, Transitions)                             */
+/* ========================================================================== */
+
+.navbar {
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+    height: var(--nav-height);
+
+    /* Aesthetic: Translucent Background with Blur (Glassmorphism) */
+    background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+
+    border-bottom: 1px solid var(--border-soft);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle downward shadow */
+    transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+/* Dark Mode Navbar Override */
+body.dark-mode .navbar { 
+    background: rgba(20, 28, 45, 0.95);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border-bottom-color: var(--border-soft);
+}
+
+.navbar-container { 
+    height: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    max-width: var(--max-width); 
+    margin-inline: auto; 
+    padding-inline: 1.5rem; /* Consistent horizontal padding */
+}
+
+/* --- LOGO --- */
+.logo { 
+    font-size: clamp(1.6rem, 2.5vw, 1.8rem); 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    letter-spacing: 0.6px; 
+    transition: color 0.3s;
+}
+.logo span { 
+    color: var(--primary); 
+}
+
+/* --- PRIMARY NAVIGATION LINKS --- */
+.menu-items ul { 
+    display: flex; /* Makes the list items horizontal */
+    gap: clamp(1.5rem, 3vw, 2.5rem); /* Responsive space between items */
+    list-style: none; /* Removes bullet points/list markers */
+}
+
+.menu-items a { 
+    font-weight: 600; 
+    font-size: 0.95rem; 
+    position: relative; 
+    transition: color 0.3s;
+    letter-spacing: 0.2px;
+    padding-bottom: 8px; /* Space for the animated underline */
+}
+
+/* Underline Animation (using ::after) */
+.menu-items a::after { 
+    content: ""; 
+    position: absolute; 
+    bottom: 0; 
+    left: 50%; 
+    width: 0; 
+    height: 3px; 
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    transition: width 0.3s var(--ease), transform 0.3s var(--ease); 
+    transform: translateX(-50%); 
+    border-radius: 99px;
+}
+
+.menu-items a:hover { 
+    color: var(--primary); 
+}
+.menu-items a:hover::after { 
+    width: 100%; 
+}
+/* --- NAV ICONS (Cart, Theme, Profile) --- */
+.nav-icons { 
+    display: flex; 
+    gap: 0.8rem; 
+}
+
+.cart-icon, .user-icon, .theme-icon { 
+    width: 42px; 
+    height: 42px; 
+    border-radius: 50%; 
+    border: 1px solid var(--border-soft);
+    display: grid; 
+    place-items: center; 
+    background: var(--bg-card); 
+    transition: all 0.3s var(--ease);
+    position: relative; 
+    box-shadow: var(--shadow-soft);
+    flex-shrink: 0;
+}
+
+.cart-icon i, .user-icon i, .theme-icon i { 
+    color: var(--primary); 
+    font-size: 1.05rem;
+}
+
+/* Hover/Focus Interaction */
+.cart-icon:hover, .user-icon:hover, .theme-icon:hover { 
+    transform: translateY(-2px) scale(1.05); /* Subtle lift and expansion */
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(180deg, #fff, var(--bg-secondary)); /* Slight light gradient shift */
+}
+
+/* Dark Mode Hover/Focus */
+body.dark-mode .cart-icon:hover, 
+body.dark-mode .user-icon:hover, 
+body.dark-mode .theme-icon:hover {
+    box-shadow: 0 8px 20px rgba(255, 77, 94, 0.3);
+    background: var(--bg-card); /* Keep background simple dark */
+}
+
+/* --- Cart Count Bubble --- */
+#cart-count {
+    position: absolute; 
+    top: -5px; 
+    right: -5px;
+    background: var(--primary); 
+    color: #fff;
+    font-size: 0.75rem; 
+    font-weight: 700;
+    width: 20px; 
+    height: 20px; 
+    border-radius: 50%;
+    display: grid; 
+    place-items: center; 
+    line-height: 1;
+    border: 2px solid var(--bg-card); /* White border for contrast */
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Cart Count Border */
+body.dark-mode #cart-count {
+    border-color: var(--bg-card); 
+}
+
+/* ================= HERO AREA ================= */
+.showcase-area {
+    min-height: 75vh;
+    background: linear-gradient(rgba(18, 24, 38, 0.7), rgba(18, 24, 38, 0.9)), 
+                url("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1600&q=80") center/cover;
+    display: grid; place-items: center; text-align: center; color: #fff; padding-inline: 1.5rem;
+}
+.main-title { 
+    font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; line-height: 1.1; 
+    margin-bottom: 1.5rem; text-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+.hero-actions { display: flex; gap: 1.25rem; justify-content: center; align-items: center; }
+.btn-secondary { border: 2px solid #fff; color: #fff; }
+.btn-secondary:hover { background: #fff; color: var(--dark); transform: translateY(-4px); }
+
+/* ================= REFINED CATEGORY SCROLL SECTION ================= */
+
+.horizontal-scroll-container { 
+    overflow-x: auto; 
+    scrollbar-width: none; 
+    /* padding-inline adds "breathing room" at the start and end of the scroll */
+    padding: 1rem 1.5rem 2.5rem; 
+    scroll-snap-type: x mandatory; 
+    -webkit-overflow-scrolling: touch; 
+    /* Prevents the scroll from affecting the parent page bounce */
+    overscroll-behavior-x: contain; 
+}
+
+.horizontal-scroll-container::-webkit-scrollbar { display: none; }
+
+.category-list-horizontal { 
+    display: flex; 
+    gap: 1.25rem; 
+    /* Ensures the last card doesn't get cut off immediately */
+    width: max-content; 
+}
+
+.category-card { 
+    /* Use clamp to make cards smaller on mobile and 320px on desktop */
+    flex: 0 0 clamp(240px, 60vw, 320px); 
+    height: 220px; 
+    border-radius: 24px; 
+    overflow: hidden; 
+    position: relative; 
+    scroll-snap-align: center; /* Better UX for mobile flic-scrolling */
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); 
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.category-card:hover { 
+    transform: translateY(-10px); 
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12); 
+}
+
+.category-card img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    object-position: center; 
+    transition: transform 0.8s var(--ease); 
+}
+
+.category-card:hover img { 
+    transform: scale(1.1) rotate(1deg); 
+    filter: brightness(0.9);
+}
+
+/* Advanced Scrim Overlay */
+.category-card .overlay { 
+    position: absolute; 
+    inset: 0; 
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-end; 
+    padding: 1.5rem; 
+    /* Modern "scrim" gradient: smoother than a standard linear gradient */
+    background: linear-gradient(
+        to top, 
+        rgba(0,0,0,0.8) 0%, 
+        rgba(0,0,0,0.3) 40%, 
+        transparent 100%
+    ); 
+    transition: background 0.3s ease;
+}
+
+.category-card:hover .overlay {
+    background: linear-gradient(
+        to top, 
+        rgba(233, 44, 64, 0.7) 0%, /* Fades into your brand Red on hover */
+        rgba(0,0,0,0.4) 50%, 
+        transparent 100%
+    );
+}
+
+.category-card h3 { 
+    color: #fff; 
+    font-size: 1.5rem; 
+    font-weight: 900; 
+    letter-spacing: -0.5px;
+    margin: 0;
+    transition: transform 0.3s var(--ease);
+}
+
+.category-card:hover h3 {
+    transform: translateX(5px);
+}
+
+/* Optional: Small "Explore" text that appears on hover */
+.category-card::after {
+    content: 'View All →';
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.category-card:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+/* ================= MENU TOPBAR REFINED ================= */
+.menu-topbar {
+    --topbar-bg: rgba(255, 255, 255, 0.85); /* Light Mode Glass */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    gap: 1.5rem;
+
+    position: sticky; 
+    top: 70px; /* Adjust based on your main Navbar height */
+    z-index: 30;
+    
+    padding: 0.8rem 1.5rem;
+    margin: 1rem auto 2.5rem auto;
+    max-width: 1200px; /* Keeps it aligned with container */
+    
+    background: var(--topbar-bg);
+    border-radius: 50px; /* Capsule look */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Dark Mode Adjustment */
+body.dark-mode .menu-topbar {
+    --topbar-bg: rgba(28, 28, 30, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+/* --- Navigation List --- */
+.secondary-nav-horizontal {
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.secondary-nav-horizontal::-webkit-scrollbar { display: none; }
+
+.secondary-nav-horizontal ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+    width: max-content;
+    padding: 0 0.5rem;
+}
+
+.secondary-nav-link {
+    text-decoration: none;
+    color: var(--text-low);
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    padding: 0.6rem 0.2rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.secondary-nav-link:hover {
+    color: var(--primary);
+}
+
+.secondary-nav-link.active {
+    color: var(--primary);
+}
+
+/* Active Underline Indicator */
+.secondary-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(233, 44, 64, 0.3);
+}
+
+/* --- Search Box Styles --- */
+.menu-filter-container { 
+    position: relative; 
+    flex: 0 0 280px; /* Fixed width on desktop */
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-low);
+    pointer-events: none;
+}
+
+.search-input { 
+    width: 100%; 
+    padding: 0.75rem 1rem 0.75rem 2.8rem; /* Space for icon */
+    border-radius: 30px; 
+    background: var(--bg-card); 
+    border: 1px solid var(--border-soft); 
+    font-size: 0.9rem; 
+    color: var(--text-high); 
+    transition: all 0.3s var(--ease); 
+}
+
+.search-input:focus { 
+    outline: none; 
+    border-color: var(--primary);
+    background: var(--bg-body);
+    box-shadow: 0 0 0 4px rgba(233,44,64,0.1);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .menu-filter-container { flex: 0 0 200px; }
+}
+
+@media (max-width: 768px) {
+    .menu-topbar {
+        flex-direction: column;
+        border-radius: 20px; /* Less rounded for mobile stacking */
+        padding: 1rem;
+        gap: 1rem;
+        top: 60px; /* Closer to top on mobile */
+    }
+    
+    .secondary-nav-horizontal {
+        width: 100%;
+        border-bottom: 1px solid var(--border-soft);
+        padding-bottom: 0.5rem;
+    }
+
+    .menu-filter-container {
+        width: 100%;
+        flex: none;
+    }
+}/* ================= MENU LIST & CARDS ================= */
+
+/* 1. Category Layout */
+.category-block { 
+    padding-block: 1.5rem; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+/* ================= TEXT-ONLY BLUR RED HEADER (NO DOT) ================= */
+.category-header { 
+    position: sticky;
+    top: 120px; 
+    z-index: 20;
+    
+    display: flex;
+    width: fit-content; 
+    margin: 1rem 0 1rem 1.5rem; 
+    
+    /* Background blur contained to the text area */
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 50px; 
+    
+    color: var(--primary); 
+    font-size: clamp(1.3rem, 4vw, 1.6rem);
+    font-weight: 900;
+    padding: 0.6rem 1.4rem; 
+    
+    box-shadow: none;
+    border: none;
+}
+
+/* REMOVED: The .category-header::before block that created the dot */
+
+body.dark-mode .category-header {
+    background: rgba(0, 0, 0, 0.2);
+    color: #ff4d5e; 
+}
+
+.food-menu-container { 
+    display: flex; 
+    gap: 1.5rem; 
+    padding: 1rem 1.5rem 2.5rem 0.5rem; 
+    overflow-x: auto; 
+    scrollbar-width: none; 
+    -webkit-overflow-scrolling: touch; 
+    scroll-behavior: smooth; 
+    scroll-snap-type: x mandatory; /* Makes cards 'snap' into place when scrolling */
+}
+
+.food-menu-container::-webkit-scrollbar { display: none; }
+
+/* 2. Advanced Menu Card */
+.menu-card { 
+    flex: 0 0 280px; 
+    scroll-snap-align: start;
+    background: var(--bg-card); 
+    border-radius: var(--radius-lg); 
+    overflow: hidden; 
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex; 
+    flex-direction: column; 
+}
+
+.menu-card:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12); 
+}
+
+.mc-img { position: relative; height: 180px; overflow: hidden; }
+.mc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+.menu-card:hover .mc-img img { transform: scale(1.08); }
+
+/* 3. Wishlist Button Overlay */
+.mc-wishlist-btn {
+    position: absolute; top: 0.8rem; right: 0.8rem;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px); border: none;
+    cursor: pointer; display: grid; place-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.mc-wishlist-btn[data-is-saved="true"] { background: var(--primary); color: #fff; }
+.mc-wishlist-btn[data-is-saved="true"] i { font-weight: 900; }
+
+/* 4. Card Content */
+.mc-body { padding: 1.2rem; flex-grow: 1; }
+.mc-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem; color: var(--text-high); }
+.mc-desc { font-size: 0.9rem; color: var(--text-low); line-height: 1.5; }
+
+/* 5. Footer & Control Area (The Morphing Logic) */
+.mc-foot { 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: 1rem 1.2rem; border-top: 1px solid var(--border-soft); 
+    background: var(--bg-card); min-height: 70px;
+}
+
+.mc-price { font-size: 1.3rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+
+.mc-control-area { position: relative; width: 110px; height: 40px; }
+
+/* Add Button State */
+.card-add-btn { 
+    position: absolute; inset: 0;
+    background: var(--primary); color: #fff; 
+    border-radius: 99px; font-weight: 700; border: none;
+    cursor: pointer; transition: 0.3s var(--ease);
+}
+
+/* Quantity Pill State */
+.card-qty-pill { 
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--primary); color: #fff; padding: 4px;
+    border-radius: 99px; opacity: 0; pointer-events: none; 
+    transform: scale(0.8); transition: 0.3s cubic-bezier(.25,1.4,.5,1);
+}
+
+.card-qty-pill button { 
+    width: 32px; height: 32px; border-radius: 50%; 
+    background: rgba(255,255,255,0.2); color: #fff; 
+    border: none; cursor: pointer; font-size: 1.2rem;
+}
+
+/* Toggle Logic: Applied via JS */
+.menu-card.has-qty .card-add-btn { opacity: 0; transform: scale(0.5); pointer-events: none; }
+.menu-card.has-qty .card-qty-pill { opacity: 1; pointer-events: auto; transform: scale(1); }
+
+/* 6. Skeleton Shimmer Effect */
+.menu-card.skeleton {
+    min-height: 350px;
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--skeleton-shimmer-color) 50%, var(--bg-card) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite linear;
+}
+
+@keyframes skeleton-shimmer { 
+    0% { background-position: -200% 0; } 
+    100% { background-position: 200% 0; } 
+}
+
+/* 7. Responsive Mobile Tweaks */
+@media (max-width: 600px) {
+    .menu-card { flex: 0 0 240px; }
+    .category-header { top: 115px; font-size: 1.3rem; }
+}
+/* ================= TEAM, REVIEWS, CONTACT, FOOTER SECTIONS ================= */
+#about-us { background: var(--bg-secondary); position: relative; overflow: hidden; padding-block: 4rem; }
+.team-grid { display: flex; gap: 2rem; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; padding-bottom: 1rem; }
+.team-grid::-webkit-scrollbar { display: none; }
+.team-member-card { 
+    flex: 0 0 280px; background: var(--bg-card); padding: 2.5rem 1.5rem; border-radius: var(--radius-lg); 
+    text-align: center; scroll-snap-align: start; box-shadow: var(--shadow-md); transition: 0.3s; 
+    border-top: 4px solid var(--primary);
+}
+.team-member-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-strong); }
+.team-member-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.2rem; border: 4px solid var(--primary); box-shadow: 0 8px 20px rgba(233,44,64,0.2); }
+
+#reviews { background: var(--bg-main); padding-block: clamp(3rem, 5vw, 5rem); }
+.review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+.review-card { 
+    background: var(--bg-card); padding: 3rem 2rem 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md); 
+    position: relative; transition: 0.3s var(--ease); display: flex; flex-direction: column; justify-content: space-between; 
+    border: 1px solid var(--border-soft);
+}
+.review-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-strong); }
+.review-card::before { content: "“"; position: absolute; top: 5px; left: 20px; font-size: 5rem; color: var(--primary); opacity: 0.15; line-height: 1; }
+.review-card p { font-style: italic; margin-bottom: 1.5rem; color: var(--text-main); line-height: 1.7; position: relative; z-index: 1; }
+.review-card h4 { color: var(--primary); font-weight: 800; margin: 0; font-size: 1rem; }
+
+#contact { padding-block: clamp(3rem, 6vw, 6rem); background-color: var(--bg-main); }
+.contact-container { 
+    display: grid; grid-template-columns: minmax(350px, 1fr) minmax(350px, 1fr); gap: 0; max-width: var(--max-width); 
+    margin: 0 auto; background: var(--bg-card); border-radius: 30px; overflow: hidden; box-shadow: var(--shadow-md); 
+    border: 1px solid var(--border-soft); padding: 0; width: 100%; 
+}
+.form-container { padding: clamp(2rem, 5vw, 4rem); display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; height: 100%; }
+.form-container input, .form-container textarea { width: 100%; padding: 1rem 1.25rem; border-radius: var(--radius-md); border: 1.5px solid var(--border-soft); background: var(--bg-secondary); color: var(--text-high); font-family: inherit; transition: all 0.3s var(--ease); }
+.form-container input:focus, .form-container textarea:focus { outline: none; border-color: var(--primary); background: var(--bg-card); box-shadow: 0 10px 25px rgba(233, 44, 64, 0.1); }
+.contact-container img { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: center; display: block; }
+
+#footer { background: var(--dark); color: #fff; padding-block: 3rem; text-align: center; }
+.footer-tagline { opacity: 0.6; font-size: 0.8rem; margin-top: 0.5rem; }
+
+
+/* ================= SLIDING SIDEBARS (ADVANCED BASE) ================= */
+:root {
+    --sidebar-width: 400px;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-overlay {
+    position: fixed; inset: 0; 
+    background: rgba(0, 0, 0, 0.4); 
+    backdrop-filter: blur(4px); /* Modern blur effect */
+    z-index: 1100; 
+    opacity: 0; visibility: hidden; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar {
+    position: fixed; top: 0; right: 0; 
+    width: var(--sidebar-width); height: 100%; 
+    background: var(--bg-card); z-index: 1101; 
+    transform: translateX(110%); /* Slightly further for cleaner entrance */
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+    display: flex; flex-direction: column;
+    overscroll-behavior: contain; /* Prevents body scroll */
+}
+
+.sidebar.active { transform: translateX(0); }
+.sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+/* ================= PROFILE SIDEBAR: PREMIUM REFINEMENT ================= */
+
+#profile-sidebar .sidebar-header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-soft);
+    padding: 1.25rem 1.5rem;
+    position: sticky; top: 0; z-index: 10;
+}
+
+/* User Card with modern gradient and mesh texture */
+.profile-user-card {
+    margin: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(233, 44, 64, 0.2);
+}
+
+/* Subtle mesh texture overlay */
+.profile-user-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    opacity: 0.1;
+}
+
+.profile-avatar {
+    width: 64px; height: 64px;
+    border: 3px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Advanced Tab Navigation */
+.profile-menu-list {
+    background: var(--bg-card);
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.profile-menu-list li a {
+    border-radius: 12px;
+    margin-bottom: 4px;
+    padding: 1rem 1.2rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Slide-in indicator effect for Active state */
+.profile-menu-list li a.active {
+    background: rgba(233, 44, 64, 0.08);
+    color: var(--primary);
+}
+
+.profile-menu-list li a.active::before {
+    width: 5px;
+    height: 60%;
+    top: 20%;
+    background: var(--primary);
+    box-shadow: 2px 0 8px rgba(233, 44, 64, 0.4);
+}
+
+/* ================= CART REFINEMENT: PRODUCT FOCUS ================= */
+
+.cart-item {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border-soft);
+    transition: background 0.2s ease;
+}
+
+.cart-item:hover {
+    background: var(--bg-secondary);
+}
+
+.item-details img {
+    width: 70px; height: 70px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.qty-controls button {
+    width: 32px; height: 32px;
+    font-size: 1.1rem;
+    border: 1px solid var(--border-soft);
+    background: var(--bg-card);
+}
+
+.qty-controls button:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: scale(1.1);
+}
+
+/* Advanced Footer: Floating look */
+.sidebar-footer {
+    padding: 2rem 1.5rem;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-soft);
+    z-index: 10;
+}
+
+.cart-checkout-btn {
+    height: 56px; /* Touch-friendly height */
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    border: none;
+    color: white;
+}
+
+/* ================= TOASTS: MOTION DESIGN ================= */
+
+.toast {
+    padding: 12px 24px;
+    border-radius: 50px; /* Pill shape */
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Dark mode toast adjustment */
+body.dark-mode .toast {
+    background: rgba(30, 30, 30, 0.9);
+    color: white;
+}
+
+/* ================= RESPONSIVE ADJUSTMENTS ================= */
+
+@media (max-width: 480px) {
+    :root { --sidebar-width: 100%; }
+    
+    .sidebar {
+        border-radius: 0;
+    }
+    
+    .profile-user-card {
+        margin: 1rem;
+        padding: 1.2rem;
+    }
+}
