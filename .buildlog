@@ -18,3 +18,4 @@
 [2025-12-08] perf: batch DOM update strategy applied to tables
 [2025-12-09] test: run database update simulations
 [2025-12-09] docs: Firestore composite index references registered
+[2025-12-10] docs: resolution criteria notes added
