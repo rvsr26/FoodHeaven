@@ -20,3 +20,4 @@
 [2025-12-09] docs: Firestore composite index references registered
 [2025-12-10] docs: resolution criteria notes added
 [2025-12-10] test: mobile breakpoints verify pass
+[2025-12-10] perf: virtualization benchmarks verified
