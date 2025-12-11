@@ -10,3 +10,4 @@ export function renderMenuItems(items) {
 window.addEventListener("scroll", () => {
     // Sticky nav highlight logic
 });
+// Category lookup helper
