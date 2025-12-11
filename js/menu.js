@@ -7,3 +7,6 @@ export function renderMenuItems(items) {
     const list = document.getElementById("menu-items");
     list.innerHTML = items.map(item => `<div>${item.name}</div>`).join('');
 }
+window.addEventListener("scroll", () => {
+    // Sticky nav highlight logic
+});
