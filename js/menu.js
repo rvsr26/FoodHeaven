@@ -15,3 +15,4 @@ window.addEventListener("scroll", () => {
 // debounced scroll check
 export function syncWishlist() { console.log("Wishlist synced with firestore"); }
 // Wishlist separate logic
+// Guest wishlist error block
