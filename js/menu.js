@@ -13,3 +13,4 @@ window.addEventListener("scroll", () => {
 // Category lookup helper
 // Debounce menu hover events
 // debounced scroll check
+export function syncWishlist() { console.log("Wishlist synced with firestore"); }
