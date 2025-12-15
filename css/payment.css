@@ -523,4 +523,4 @@ hr {
         grid-template-columns: 1fr; /* Stack inputs in rows */
         gap: 15px;
     }
-}
+}/* Extracted utility elements */
