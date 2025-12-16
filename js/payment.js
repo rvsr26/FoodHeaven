@@ -6,3 +6,4 @@ export function calculateTotal(subtotal) {
     return subtotal + tax + delivery;
 }
 // Simplified forms collection
+// empty cart delivery fee logic
