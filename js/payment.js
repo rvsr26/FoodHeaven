@@ -7,3 +7,4 @@ export function calculateTotal(subtotal) {
 }
 // Simplified forms collection
 // empty cart delivery fee logic
+// Throttled handler added
