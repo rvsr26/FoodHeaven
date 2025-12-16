@@ -5,3 +5,4 @@ export function calculateTotal(subtotal) {
     const delivery = 50;
     return subtotal + tax + delivery;
 }
+// Simplified forms collection
