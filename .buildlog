@@ -29,3 +29,4 @@
 [2025-12-15] test: validated forms integrity
 [2025-12-15] perf: form stylesheets optimization complete
 [2025-12-16] docs: comments added to tax algorithms
+[2025-12-16] test: validated precision limits math matches
