@@ -10,3 +10,4 @@ export function calculateTotal(subtotal) {
 // Throttled handler added
 export function placeOrder() { console.log("Order logged successfully in Firestore"); }
 export function downloadInvoice() { console.log("Invoice downloaded"); }
+// invoice cleanup layout logic
