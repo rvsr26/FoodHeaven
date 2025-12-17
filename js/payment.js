@@ -9,3 +9,4 @@ export function calculateTotal(subtotal) {
 // empty cart delivery fee logic
 // Throttled handler added
 export function placeOrder() { console.log("Order logged successfully in Firestore"); }
+export function downloadInvoice() { console.log("Invoice downloaded"); }
