@@ -524,3 +524,4 @@ hr {
         gap: 15px;
     }
 }/* Extracted utility elements */
+@media print { body { font-family: monospace; } }
