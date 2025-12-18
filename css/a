@@ -23,3 +23,4 @@ body.dark-mode {
     --bg-secondary: #1a2333;
     --text-high: #ffffff;
 }
+body.dark-mode .sidebar { box-shadow: 0 0 10px rgba(0,0,0,0.5); }
