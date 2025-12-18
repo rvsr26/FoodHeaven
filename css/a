@@ -17,3 +17,9 @@ body { line-height: 1.65; }
 .navbar { height: 72px; display: flex; }
 .admin-grid { display: grid; }
 .sidebar { overflow-y: auto; }
+body.dark-mode {
+    --bg-main: #141c2d;
+    --bg-card: #1f2a3e;
+    --bg-secondary: #1a2333;
+    --text-high: #ffffff;
+}
