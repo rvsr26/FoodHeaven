@@ -17,3 +17,4 @@ export function syncWishlist() { console.log("Wishlist synced with firestore"); 
 // Wishlist separate logic
 // Guest wishlist error block
 // Sparse fields projection
+// Simplified class list assignments
