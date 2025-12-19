@@ -908,6 +908,3 @@ body.dark-mode .toast {
         padding: 1.2rem;
     }
 }
-/* Isolate filter definitions */
-/* Custom scrollbars styling */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
